@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>For Nazwa Naura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+    <style>
+        /* Reset dan optimasi untuk mobile */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Pencegahan zoom pada iOS */
+        input, textarea, button, select {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            background: linear-gradient(135deg, 
+                #ff0066 0%, 
+                #ff3385 25%, 
+                #ff66a3 50%, 
+                #ff99c2 75%, 
+                #ffccdc 100%);
+            overflow-x: hidden;
+            color: #fff;
+            position: relative;
+        }
+
+        /* Overlay gradient untuk depth */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(255, 0, 102, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Untuk mengatasi masalah height di iOS */
+        html {
+            height: -webkit-fill-available;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 6vw, 3.5rem);
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffff00, #ffcc00, #ff9900);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .age-number {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff3366, #ff0066);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(255, 0, 102, 0.3);
+            margin-top: 10px;
+        }
+
+        /* Area untuk kue */
+        .cake-section {
+            position: relative;
+            margin: 30px auto;
+            width: 100%;
+            max-width: 400px;
+            height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            -webkit-user-select: none;
+            user-select: none;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
+        /* Kue yang sudah jadi */
+        .completed-cake {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: none;
+            z-index: 5;
+        }
+
+        /* Lapisan kue */
+        .cake-layer {
+            position: absolute;
+            width: 90%;
+            max-width: 300px;
+            height: 60px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3),
+                        0 5px 15px rgba(0, 0, 0, 0.2);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+        }
+
+        .layer-1 {
+            background: linear-gradient(to bottom, #8B4513 0%, #A0522D 50%, #8B4513 100%);
+            bottom: 0;
+            z-index: 1;
+            height: 70px;
+            max-width: 320px;
+        }
+
+        .layer-2 {
+            background: linear-gradient(to bottom, #D2691E 0%, #A0522D 50%, #D2691E 100%);
+            bottom: 70px;
+            z-index: 2;
+            height: 60px;
+            max-width: 280px;
+        }
+
+        .layer-3 {
+            background: linear-gradient(to bottom, #CD853F 0%, #D2691E 50%, #CD853F 100%);
+            bottom: 130px;
+            z-index: 3;
+            height: 50px;
+            max-width: 240px;
+        }
+
+        /* Lilin */
+        .candles {
+            position: absolute;
+            bottom: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 15px;
+        }
+
+        .candle {
+            width: 18px;
+            height: 70px;
+            background: linear-gradient(to right, #ff3333 0%, #ff6666 50%, #ff3333 100%);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            box-shadow: 0 0 15px rgba(255, 100, 100, 0.8);
+        }
+
+        .candle:nth-child(2) {
+            background: linear-gradient(to right, #ffcc00 0%, #ffff66 50%, #ffcc00 100%);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+        }
+
+        .flame {
+            width: 22px;
+            height: 35px;
+            background: linear-gradient(to bottom, #ffff00 0%, #ff9900 50%, #ff6600 100%);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -30px;
+            left: -2px;
+            animation: flicker 0.8s infinite alternate;
+            box-shadow: 0 0 25px #ff9900;
+            transform-origin: bottom center;
+        }
+
+        /* Blok-blok kue */
+        .cake-block {
+            position: absolute;
+            width: 55px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(to bottom, #8B4513, #A0522D);
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4),
+                        0 3px 8px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            opacity: 0;
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            will-change: transform, opacity;
+        }
+
+        /* Section Foto */
+        .photos-section {
+            margin: 40px auto;
+            padding: 0 10px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: 25px;
+            color: #ffffcc;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+        }
+
+        .photo-frame {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover .photo-caption {
+            transform: translateY(0);
+        }
+
+        /* Modal untuk foto */
+        .photo-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 80%;
+            position: relative;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(255, 0, 102, 0.7);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 0, 102, 1);
+        }
+
+        /* Pesan ulang tahun */
+        .birthday-message {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 30px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-out 3s both;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .birthday-message h2 {
+            color: #ffff00;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.8rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .birthday-message p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Kontrol suara */
+        .sound-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .sound-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: white;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .sound-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Animasi */
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes flicker {
+            0%, 100% { 
+                transform: scale(1) rotate(-2deg);
+                opacity: 0.9;
+            }
+            25% { 
+                transform: scale(1.1) rotate(2deg);
+                opacity: 1;
+            }
+            50% { 
+                transform: scale(0.95) rotate(0deg);
+                opacity: 0.8;
+            }
+            75% { 
+                transform: scale(1.05) rotate(-1deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                top: -100px;
+                opacity: 0;
+                transform: rotate(0deg) scale(0.8);
+            }
+            10% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                top: var(--target-top);
+                opacity: 0;
+                transform: rotate(var(--rotate)) scale(0.9);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Status bar area untuk iPhone */
+        @supports (padding-top: env(safe-area-inset-top)) {
+            body {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right);
+            }
+            
+            .sound-control {
+                top: calc(20px + env(safe-area-inset-top));
+                right: calc(20px + env(safe-area-inset-right));
+            }
+        }
+
+        /* Floating balloons */
+        .balloon {
+            position: fixed;
+            width: 50px;
+            height: 60px;
+            background: #ff3366;
+            border-radius: 50%;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+            box-shadow: inset -10px -10px 10px rgba(0,0,0,0.1);
+        }
+
+        .balloon::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 15px;
+            background: rgba(255,255,255,0.5);
+        }
+
+        .balloon:nth-child(odd) {
+            background: #ff9900;
+        }
+
+        .balloon:nth-child(even) {
+            background: #33ccff;
+        }
+
+        /* Responsif */
+        @media (max-width: 768px) {
+            .cake-section {
+                height: 320px;
+                max-width: 320px;
+            }
+            
+            .cake-layer {
+                height: 50px;
+            }
+            
+            .layer-1 {
+                height: 60px;
+            }
+            
+            .layer-2 {
+                height: 50px;
+                bottom: 60px;
+            }
+            
+            .layer-3 {
+                height: 40px;
+                bottom: 110px;
+            }
+            
+            .candles {
+                bottom: 150px;
+            }
+            
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px 10px;
+            }
+            
+            .cake-section {
+                max-width: 280px;
+                height: 280px;
+            }
+            
+            .candles {
+                gap: 10px;
+            }
+            
+            .candle {
+                width: 15px;
+                height: 60px;
+            }
+            
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .birthday-message {
+                padding: 20px;
+            }
+        }
+
+        /* Loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff0066 0%, #ff3385 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-content {
+            text-align: center;
+            color: white;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h2>Mempersiapkan Kejutan Ulang Tahun...</h2>
+            <p>Harap tunggu sebentar</p>
+        </div>
+    </div>
+
+    <!-- Balloon decorations -->
+    <div class="balloon" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="balloon" style="left: 20%; animation-delay: 1s;"></div>
+    <div class="balloon" style="left: 80%; animation-delay: 2s;"></div>
+    <div class="balloon" style="left: 90%; animation-delay: 3s;"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-birthday-cake"></i> Selamat Ulang Tahun! <i class="fas fa-birthday-cake"></i></h1>
+            <p class="subtitle">Merayakan hari spesial yang penuh kebahagiaan</p>
+            <div class="age-number">19 Tahun</div>
+        </div>
+        
+        <div class="cake-section" id="cakeArea">
+            <!-- Blok-blok kue akan dibuat dengan JavaScript -->
+            
+            <!-- Kue yang sudah jadi -->
+            <div class="completed-cake" id="completedCake">
+                <div class="cake-layer layer-1"></div>
+                <div class="cake-layer layer-2"></div>
+                <div class="cake-layer layer-3"></div>
+                
+                <div class="candles">
+                    <div class="candle">
+                        <div class="flame"></div>
+                    </div>
+                    <div class="candle">
+                        <div class="flame"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Foto -->
+        <div class="photos-section">
+            <h2 class="section-title"><i class="fas fa-images"></i> Kenangan Indah</h2>
+            <div class="photo-frame">
+                <div class="photo-grid" id="photoGrid">
+                    <!-- Foto-foto akan dimuat via JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="birthday-message">
+            <h2>Happy Birthday</h2>
+            <p>Selamat ulang tahun. Semoga hari ini jadi pengingat kalau kamu sudah berjalan sejauh ini dan layak merayakannya, sekecil apa pun langkah yang sudah kamu ambil.</p>
+            <p>Semoga proses belajarmu, terutama bahasa Jepang dan jalanmu untuk bisa kerja di sana, dimudahkan dan dilancarkan. Semoga kamu tetap konsisten, nggak gampang nyerah, dan satu per satu targetmu bisa tercapai.</p>
+                        <p>Aku juga mau minta maaf sebesar-besarnya karena selama ini aku punya salah, entah dari sikap, kata-kata, atau hal lain yang bikin kamu nggak nyaman. Semoga ke depan semuanya bisa lebih baik.</p>
+            <p style="text-align: center; font-style: italic; margin-top: 15px; color: #ffffcc;">
+                ~ May this new year bring you closer to who you are meant to be ~
+            </p>
+        </div>
+    </div>
+    
+    <!-- Modal untuk foto -->
+    <div class="photo-modal" id="photoModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="modalImage" src="" alt="Foto">
+        </div>
+    </div>
+    
+    <!-- Kontrol suara -->
+    <div class="sound-control">
+        <div class="sound-btn" id="soundBtn">
+            <i class="fas fa-volume-up"></i>
+        </div>
+    </div>
+
+    <!-- Audio -->
+    <audio id="birthdayAudio" preload="auto" loop playsinline>
+        <source src="music/happy-birthday.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <script>
+        // Tunggu sampai DOM sepenuhnya dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi variabel
+            const loader = document.getElementById('loader');
+            const cakeArea = document.getElementById('cakeArea');
+            const completedCake = document.getElementById('completedCake');
+            const soundBtn = document.getElementById('soundBtn');
+            const birthdayAudio = document.getElementById('birthdayAudio');
+            const photoGrid = document.getElementById('photoGrid');
+            const photoModal = document.getElementById('photoModal');
+            const modalImage = document.getElementById('modalImage');
+            const closeModal = document.querySelector('.close-modal');
+            
+            // Status
+            let isSoundOn = true;
+            let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            let isAndroid = /Android/.test(navigator.userAgent);
+            
+            // Array foto placeholder (bisa diganti dengan URL foto asli)
+            const photos = [
+                { url: 'images/1.png' },
+                { url: 'images/2.png' },
+                { url: 'images/3.png' },
+                { url: 'images/4.png' },
+                { url: 'images/5.png' },
+                { url: 'images/6.png' }
+            ];
+            
+            // Posisi target untuk setiap blok kue
+            const blockPositions = [
+                // Layer 1 (bawah)
+                {left: '35%', top: '75%', rotate: '0deg'},
+                {left: '50%', top: '75%', rotate: '5deg'},
+                {left: '20%', top: '75%', rotate: '-5deg'},
+                {left: '65%', top: '75%', rotate: '3deg'},
+                // Layer 2 (tengah)
+                {left: '40%', top: '60%', rotate: '2deg'},
+                {left: '55%', top: '60%', rotate: '-2deg'},
+                {left: '25%', top: '60%', rotate: '4deg'},
+                // Layer 3 (atas)
+                {left: '45%', top: '45%', rotate: '-1deg'},
+                {left: '30%', top: '45%', rotate: '3deg'}
+            ];
+            
+            // Warna untuk blok kue
+            const blockColors = [
+                'linear-gradient(to bottom, #8B4513, #A0522D)',
+                'linear-gradient(to bottom, #A0522D, #8B4513)',
+                'linear-gradient(to bottom, #D2691E, #A0522D)',
+                'linear-gradient(to bottom, #CD853F, #D2691E)'
+            ];
+            
+            // Fungsi untuk memulai semuanya
+            function initializeBirthday() {
+                // Sembunyikan loader
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 500);
+                }, 1500);
+                
+                // Mulai audio
+                startAudio();
+                
+                // Buat gallery foto
+                createPhotoGallery();
+                
+                // Mulai animasi kue setelah sedikit delay
+                setTimeout(startCakeAnimation, 2000);
+                
+                // Tambahkan efek konfeti
+                createConfetti();
+            }
+            
+            // Fungsi untuk memulai audio
+            function startAudio() {
+                // Untuk mobile, kita butuh interaksi pengguna terlebih dahulu
+                if (isIOS || isAndroid) {
+                    // Di mobile, tunggu interaksi pengguna
+                    document.body.addEventListener('click', function initAudio() {
+                        birthdayAudio.play().then(() => {
+                            console.log("Audio started successfully");
+                        }).catch(e => {
+                            console.log("Audio play failed:", e);
+                        });
+                        document.body.removeEventListener('click', initAudio);
+                    }, { once: true });
+                } else {
+                    // Di desktop, langsung putar
+                    birthdayAudio.play().catch(e => {
+                        console.log("Autoplay blocked, waiting for user interaction");
+                    });
+                }
+            }
+            
+            // Fungsi untuk membuat gallery foto
+            function createPhotoGallery() {
+                photos.forEach((photo, index) => {
+                    const photoItem = document.createElement('div');
+                    photoItem.className = 'photo-item';
+                    photoItem.innerHTML = `
+                        <img src="${photo.url}" alt="${photo.caption}" loading="lazy">
+                        <div class="photo-caption">${photo.caption}</div>
+                    `;
+                    
+                    photoItem.addEventListener('click', () => {
+                        openPhotoModal(photo.url, photo.caption);
+                    });
+                    
+                    photoGrid.appendChild(photoItem);
+                });
+            }
+            
+            // Fungsi untuk membuka modal foto
+            function openPhotoModal(url, caption) {
+                modalImage.src = url;
+                modalImage.alt = caption;
+                photoModal.style.display = 'flex';
+                
+                // Hentikan audio sementara
+                birthdayAudio.pause();
+            }
+            
+            // Fungsi untuk membuat blok-blok kue
+            function createCakeBlocks() {
+                // Hapus blok yang sudah ada
+                const existingBlocks = document.querySelectorAll('.cake-block');
+                existingBlocks.forEach(block => {
+                    if (block.parentNode) {
+                        block.parentNode.removeChild(block);
+                    }
+                });
+                
+                // Buat blok baru
+                const fragment = document.createDocumentFragment();
+                
+                for (let i = 0; i < blockPositions.length; i++) {
+                    const block = document.createElement('div');
+                    block.className = 'cake-block';
+                    block.style.left = blockPositions[i].left;
+                    block.style.setProperty('--target-top', blockPositions[i].top);
+                    block.style.setProperty('--rotate', blockPositions[i].rotate);
+                    
+                    // Beri warna acak dari array warna
+                    const colorIndex = Math.floor(Math.random() * blockColors.length);
+                    block.style.background = blockColors[colorIndex];
+                    
+                    // Atur delay animasi yang berbeda untuk setiap blok
+                    block.style.animationDelay = `${i * 0.2}s`;
+                    
+                    fragment.appendChild(block);
+                }
+                
+                cakeArea.appendChild(fragment);
+            }
+            
+            // Fungsi untuk memulai animasi kue
+            function startCakeAnimation() {
+                // Buat blok-blok kue
+                createCakeBlocks();
+                
+                // Mulai animasi jatuh untuk setiap blok
+                const blocks = document.querySelectorAll('.cake-block');
+                let completedBlocks = 0;
+                
+                blocks.forEach((block, index) => {
+                    // Atur animasi jatuh
+                    block.style.animation = `fall ${1.5 + index * 0.1}s ease-in forwards`;
+                    
+                    // Gunakan event listener untuk melacak kapan animasi selesai
+                    block.addEventListener('animationend', function() {
+                        block.style.display = 'none';
+                        completedBlocks++;
+                        
+                        // Tampilkan kue yang sudah jadi setelah semua blok selesai
+                        if (completedBlocks === blocks.length) {
+                            setTimeout(() => {
+                                completedCake.style.display = 'block';
+                                completedCake.style.animation = 'fadeIn 1s ease-out forwards';
+                                
+                                // Feedback haptic untuk mobile
+                                if (navigator.vibrate) {
+                                    navigator.vibrate([100, 50, 100]);
+                                }
+                            }, 500);
+                        }
+                    }, { once: true });
+                });
+            }
+            
+            // Fungsi untuk mengontrol suara
+            function toggleSound() {
+                isSoundOn = !isSoundOn;
+                
+                if (isSoundOn) {
+                    soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    birthdayAudio.play().catch(e => console.log("Failed to play audio:", e));
+                } else {
+                    soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                    birthdayAudio.pause();
+                }
+                
+                // Feedback haptic untuk mobile
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+            }
+            
+            // Fungsi untuk membuat konfeti
+            function createConfetti() {
+                const confettiCount = 30;
+                
+                for (let i = 0; i < confettiCount; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.style.position = 'fixed';
+                        confetti.style.width = '10px';
+                        confetti.style.height = '10px';
+                        confetti.style.backgroundColor = ['#ff3366', '#ffcc00', '#33cc33', '#3399ff'][Math.floor(Math.random() * 4)];
+                        confetti.style.borderRadius = '50%';
+                        confetti.style.left = `${Math.random() * 100}vw`;
+                        confetti.style.top = '-10px';
+                        confetti.style.zIndex = '9998';
+                        confetti.style.opacity = '0.8';
+                        confetti.style.pointerEvents = 'none';
+                        document.body.appendChild(confetti);
+                        
+                        // Animasi jatuh
+                        const duration = 2000 + Math.random() * 3000;
+                        confetti.animate([
+                            { transform: 'translateY(0) rotate(0deg)', opacity: 0.8 },
+                            { transform: `translateY(${window.innerHeight + 10}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                        ], {
+                            duration: duration,
+                            easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                        });
+                        
+                        // Hapus setelah animasi selesai
+                        setTimeout(() => {
+                            if (confetti.parentNode) {
+                                confetti.parentNode.removeChild(confetti);
+                            }
+                        }, duration);
+                    }, i * 100);
+                }
+            }
+            
+            // Event listeners
+            soundBtn.addEventListener('click', toggleSound, { passive: true });
+            closeModal.addEventListener('click', () => {
+                photoModal.style.display = 'none';
+                // Lanjutkan audio
+                if (isSoundOn) {
+                    birthdayAudio.play().catch(e => console.log("Failed to resume audio:", e));
+                }
+            });
+            
+            // Tutup modal saat klik di luar gambar
+            photoModal.addEventListener('click', (e) => {
+                if (e.target === photoModal) {
+                    photoModal.style.display = 'none';
+                    // Lanjutkan audio
+                    if (isSoundOn) {
+                        birthdayAudio.play().catch(e => console.log("Failed to resume audio:", e));
+                    }
+                }
+            });
+            
+            // Mulai semuanya
+            initializeBirthday();
+            
+            // Deteksi orientasi layar
+            window.addEventListener('orientationchange', () => {
+                // Refresh halaman untuk menyesuaikan layout
+                setTimeout(() => {
+                    window.location.reload();
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
